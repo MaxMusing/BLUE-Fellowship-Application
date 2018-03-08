@@ -1,20 +1,45 @@
-var currentPage = 1;
+let currentPage = 1;
 goToPage(currentPage);
 
-var pageLinks = document.getElementsByClassName("page-link");
+let pageLinks = document.getElementsByClassName("page-link");
 
-for (var i = 0; i < pageLinks.length; i++) {
+for (let i = 0; i < pageLinks.length; i++) {
 	pageLinks[i].addEventListener("click", function() {
-		var linkNumber = this.getAttribute("data-page-to");
+		let linkNumber = this.getAttribute("data-page-to");
 		goToPage(linkNumber);
 	});
 }
 
 function goToPage(pageNumber) {
-	getPageByNumber(currentPage).style.display = "none";
+	let oldPage = getPageByNumber(currentPage);
+	let newPage = getPageByNumber(pageNumber);
+
+	oldPage.style.display = "none";
+	newPage.style.display = "block";
+
 	currentPage = pageNumber;
-	getPageByNumber(currentPage).style.display = "block";
+
 	window.scrollTo(0, 0);
+
+	let textBlock = newPage.children[0];
+	let text = textBlock.innerHTML;
+	let options = newPage.children[1];
+
+	options.style.display = "none";
+
+	textBlock.innerHTML = "";
+
+	for (let i = 0; i < text.length; i++) {
+		setTimeout(function() {
+			textBlock.innerHTML += text.charAt(i);
+
+			if (i === text.length - 1) {
+				setTimeout(function() {
+					options.style.display = "block";
+				}, 1000);
+			}
+		}, 10 * i);
+	}
 }
 
 function getPageByNumber(pageNumber) {
