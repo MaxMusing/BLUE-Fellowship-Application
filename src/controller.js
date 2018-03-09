@@ -1,3 +1,7 @@
+const letterTime = 15;
+const lineBreakTime = 250;
+const optionTime = 500;
+
 let currentPage = 1;
 goToPage(currentPage);
 
@@ -31,11 +35,14 @@ function goToPage(pageNumber) {
 
 	textBlock.innerHTML = "";
 
+	let delay = 0;
+
 	for (let i = 0; i < text.length; i++) {
 		if (text.substr(i, 4) === "<br>") {
+			delay += lineBreakTime;
 			setTimeout(function() {
 				textBlock.innerHTML += "<br>";
-			}, 10 * i);
+			}, i * letterTime + delay);
 
 			i += 3;
 		} else {
@@ -46,10 +53,10 @@ function goToPage(pageNumber) {
 					if (options) {
 						setTimeout(function() {
 							options.style.display = "block";
-						}, 1000);
+						}, optionTime);
 					}
 				}
-			}, 10 * i);
+			}, i * letterTime + delay);
 		}
 	}
 }
