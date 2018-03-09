@@ -32,21 +32,25 @@ function goToPage(pageNumber) {
 	textBlock.innerHTML = "";
 
 	for (let i = 0; i < text.length; i++) {
-		setTimeout(function() {
-			if (text.charAt(i) === '@') {
-				textBlock.innerHTML += "<br />";
-			} else {
-				textBlock.innerHTML += text.charAt(i);
-			}
+		if (text.substr(i, 4) === "<br>") {
+			setTimeout(function() {
+				textBlock.innerHTML += "<br>";
+			}, 10 * i);
 
-			if (options) {
+			i += 3;
+		} else {
+			setTimeout(function() {
+				textBlock.innerHTML += text.charAt(i);
+
 				if (i === text.length - 1) {
-					setTimeout(function() {
-						options.style.display = "block";
-					}, 1000);
+					if (options) {
+						setTimeout(function() {
+							options.style.display = "block";
+						}, 1000);
+					}
 				}
-			}
-		}, 10 * i);
+			}, 10 * i);
+		}
 	}
 }
 
