@@ -25,18 +25,26 @@ function goToPage(pageNumber) {
 	let text = textBlock.innerHTML;
 	let options = newPage.children[1];
 
-	options.style.display = "none";
+	if (options) {
+		options.style.display = "none";
+	}
 
 	textBlock.innerHTML = "";
 
 	for (let i = 0; i < text.length; i++) {
 		setTimeout(function() {
-			textBlock.innerHTML += text.charAt(i);
+			if (text.charAt(i) === '@') {
+				textBlock.innerHTML += "<br />";
+			} else {
+				textBlock.innerHTML += text.charAt(i);
+			}
 
-			if (i === text.length - 1) {
-				setTimeout(function() {
-					options.style.display = "block";
-				}, 1000);
+			if (options) {
+				if (i === text.length - 1) {
+					setTimeout(function() {
+						options.style.display = "block";
+					}, 1000);
+				}
 			}
 		}, 10 * i);
 	}
